@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "975482824984",
+    "project_id": "skopskivremeplov2",
+    "storage_bucket": "skopskivremeplov2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975482824984:android:4423c0f569aeffdfddd66d",
+        "android_client_info": {
+          "package_name": "com.example.skopski_vremeplov"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIRC9q-YN619ZA2bp8_5QXStQgXpBt11E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
