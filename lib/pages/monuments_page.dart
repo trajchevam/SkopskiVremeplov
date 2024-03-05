@@ -244,6 +244,7 @@ class _MonumentsPageState extends State<MonumentsPage> {
                                 _monuments.removeAt(index);
                               });
                             },
+                            color: Colors.white,
                           )
                         ]
                       ]),
