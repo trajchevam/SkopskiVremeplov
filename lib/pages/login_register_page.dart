@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _title(){
-    return isLogin ? Text('Login', style: TextStyle(color: Colors.white)) : Text('Register', style: TextStyle(color: Colors.white));
+    return isLogin ? Text('Најави се', style: TextStyle(color: Colors.white)) : Text('Регистрирај се', style: TextStyle(color: Colors.white));
   }
 
   Widget _entryField(
