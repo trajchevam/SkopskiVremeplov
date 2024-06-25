@@ -183,8 +183,7 @@ class _MonumentDetailsPageState extends State<MonumentDetailsPage> {
                                   ),
                                 ))
                             : Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   IconButton(
                                     onPressed: () {
@@ -203,7 +202,7 @@ class _MonumentDetailsPageState extends State<MonumentDetailsPage> {
                                     color: Colors.orange,
                                   ),
                                 ],
-                              )
+                              ),
                       ],
                     ),
                   ),

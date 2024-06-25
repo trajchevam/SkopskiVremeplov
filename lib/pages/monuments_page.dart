@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -184,76 +185,68 @@ class _MonumentsPageState extends State<MonumentsPage> {
             itemCount: _monuments.length,
             itemBuilder: (context, index) {
               return Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MonumentDetailsPage(
-                                locations: _locations,
-                                monuments: _monuments,
-                                tours: _tours,
-                                monumentId: index,
-                            )));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange, // Text color
-                    elevation: 5, // Shadow elevation
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(10), // Button border radius
-                    ),
-                  ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MonumentDetailsPage(
+                                      locations: _locations,
+                                      monuments: _monuments,
+                                      tours: _tours,
+                                      monumentId: index,
+                                    )));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange, // Text color
+                        elevation: 5, // Shadow elevation
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10), // Button border radius
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            GoogleMaps([_monuments[index]])));
-                              },
-                              icon: const Icon(Icons.location_on),
-                              iconSize: 30,
-                              color: Colors.white,
+                            Expanded(
+                              child: Center(
+                                child: Image.network(
+                                  'https://upload.wikimedia.org/wikipedia/commons/8/80/Matka_Canyon_Skopje_3.jpg',
+                                ),
+                              ),
                             ),
-                            Spacer(),
-                          ],
-                        ),
-                        ListTile(
-                          title: Text(
-                            _monuments[index].name,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
+                            ListTile(
+                              title: Text(
+                                _monuments[index].name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        if (isSignedIn) ...[
-                          IconButton(
-                            icon: Icon(Icons.delete_rounded),
-                            onPressed: () {
-                              setState(() {
-                                _monuments.removeAt(index);
-                              });
-                            },
-                            color: Colors.white,
-                          )
-                        ]
-                      ]),
-                ),
-                decoration: BoxDecoration(
-                    color: Colors.orangeAccent,
-                    borderRadius: BorderRadius.circular(12.0)),
-                margin: EdgeInsets.all(10.0),
-              );
+                            if (isSignedIn) ...[
+                              IconButton(
+                                icon: Icon(Icons.delete_rounded),
+                                onPressed: () {
+                                  setState(() {
+                                    _monuments.removeAt(index);
+                                  });
+                                },
+                                color: Colors.white,
+                              )
+                            ]
+                          ]),
+                    ),),
+                    decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(12.0)),
+                    margin: EdgeInsets.all(10.0),
+                  );
             }));
   }
 }

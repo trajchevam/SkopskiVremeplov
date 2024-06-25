@@ -48,8 +48,7 @@ class _NewMonumentState extends State<NewMonument> {
       enteredName,
       location,
       enteredDescription,
-      "",
-      null
+      ""
     );
 
     widget.addMonument(newMonument);
