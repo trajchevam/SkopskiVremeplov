@@ -97,7 +97,7 @@ class _GoogleMapPageState extends State<GoogleMaps> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        title: const Text('Google Map Page',  style: TextStyle(color: Colors.white)),
+        title: const Text('Мапа со локации',  style: TextStyle(color: Colors.white)),
       ),
       body: Container(
         decoration: const BoxDecoration(color: Colors.blueGrey),

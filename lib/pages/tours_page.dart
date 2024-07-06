@@ -68,7 +68,9 @@ class _ToursPageState extends State<ToursPage> {
             behavior: HitTestBehavior.opaque,
             child: NewTour(
               addTour: _addNewTourToList,
+              locations: _locations,
               monuments: _monuments,
+              tours: _tours,
             ),
           );
         });

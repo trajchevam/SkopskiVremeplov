@@ -155,6 +155,21 @@ class _MonumentDetailsPageState extends State<MonumentDetailsPage> {
                   style: TextStyle(fontSize: 16.0, color: Colors.brown),
                 ),
                 SizedBox(height: 16.0),
+                Center(
+                  child: Container(
+                    color: Colors.orange,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    child: Text(
+                      _monuments[_monumentId].name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   alignment: Alignment.center, // Center align the content
                   child: Container(
@@ -170,18 +185,16 @@ class _MonumentDetailsPageState extends State<MonumentDetailsPage> {
                             ? Image.file(_selectedImage!)
                             : Container(),
                         _selectedImage != null
-                            ? Container(
-                                color: Colors.orange,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 16.0),
-                                child: Text(
-                                  _monuments[_monumentId].name,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ))
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                    Image.asset(
+                                      'lib/assets/logoSkopje.png',
+                                      // height: 200, // Optional: set the image height
+                                      fit: BoxFit
+                                          .cover, // Optional: adjust how the image is displayed
+                                    ),
+                                  ])
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

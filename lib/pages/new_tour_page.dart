@@ -5,12 +5,17 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:skopski_vremeplov/modules/tour.dart';
 import '../modules/monument.dart';
+import '../modules/location.dart';
+
 
 class NewTour extends StatefulWidget {
   final Function addTour;
-  final List<Monument> monuments;
 
-  const NewTour({super.key, required this.addTour, required this.monuments});
+  final List<Location> locations;
+  final List<Monument> monuments;
+  final List<Tour> tours;
+
+  const NewTour({super.key, required this.addTour, required this.monuments, required this.locations, required this.tours});
 
   @override
   State<NewTour> createState() => _NewTourState();
@@ -23,12 +28,31 @@ class _NewTourState extends State<NewTour> {
   int? _intValue;
 
   late List<Monument> _selectedMonuments;
-  List<Monument> allMonuments = [];
+
+  List<Tour> _tours = [];
+  List<Monument> _monuments = [];
+  List<Location> _locations = [];
+  List<Monument> _allMonuments = [];
 
   @override
   void initState() {
     super.initState();
-    allMonuments = widget.monuments + Monument.getMonuments();
+    _tours = widget.tours;
+    _monuments = widget.monuments;
+    _locations = widget.locations;
+    _allMonuments = _getAllMonumentsFromTours();
+  }
+
+  List<Monument> _getAllMonumentsFromTours(){
+    Set<Monument> uniqueLocations = {};
+
+    for (var tour in _tours) {
+      for (var monument in tour.monuments) {
+        uniqueLocations.add(monument);
+      }
+    }
+
+    return uniqueLocations.toList();
   }
 
   void _submitData() {
@@ -82,7 +106,7 @@ class _NewTourState extends State<NewTour> {
           },
         ),
         MultiSelectDialogField(
-          items: allMonuments.map((monument) => MultiSelectItem(monument, monument.name)).toList(),
+          items: _monuments.map((monument) => MultiSelectItem(monument, monument.name)).toList(),
           listType: MultiSelectListType.CHIP,
           buttonText: Text("Одбери знаменитости"),
           confirmText: Text("Ок"),

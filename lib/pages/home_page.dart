@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   List<Tour> _tours = [];
   List<Monument> _monuments = [];
   List<Location> _locations = [];
+  List<Monument> _allMonuments = [];
 
   String? errorMessage = '';
 
@@ -45,6 +46,19 @@ class _HomePageState extends State<HomePage> {
     _tours = widget.tours;
     _monuments = widget.monuments;
     _locations = widget.locations;
+    _allMonuments = _getAllMonumentsFromTours();
+  }
+
+  List<Monument> _getAllMonumentsFromTours() {
+    Set<Monument> uniqueLocations = {};
+
+    for (var tour in _tours) {
+      for (var monument in tour.monuments) {
+        uniqueLocations.add(monument);
+      }
+    }
+
+    return uniqueLocations.toList();
   }
 
   Future<void> _signOut() async {
@@ -115,56 +129,65 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ToursPage(
-                      locations: _locations,
-                      monuments: _monuments,
-                      tours: _tours,
+            Spacer(),
+            Column(children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ToursPage(
+                        locations: _locations,
+                        monuments: _monuments,
+                        tours: _tours,
+                      ),
                     ),
+                  );
+                },
+                child: Text(
+                  'Тури',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 50,
                   ),
-                );
-              },
-              child: Text(
-                'Тури',
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 50,
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MonumentsPage(
-                      locations: _locations,
-                      monuments: _monuments,
-                      tours: _tours,
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MonumentsPage(
+                        locations: _locations,
+                        monuments: _allMonuments,
+                        tours: _tours,
+                      ),
                     ),
+                  );
+                },
+                child: Text(
+                  'Знаменитости',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 50,
                   ),
-                );
-              },
-              child: Text(
-                'Знаменитости',
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 50,
                 ),
               ),
+            ]),
+            Spacer(),
+            Image.asset(
+              'lib/assets/logoSkopje.png',
+              height: 200, // Optional: set the image height
+              fit: BoxFit.cover, // Optional: adjust how the image is displayed
             ),
           ],
         ),

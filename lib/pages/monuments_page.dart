@@ -75,6 +75,9 @@ class _MonumentsPageState extends State<MonumentsPage> {
             behavior: HitTestBehavior.opaque,
             child: NewLocation(
               addLocation: _addNewLocationToList,
+              locations: _locations,
+              monuments: _monuments,
+              tours: _tours,
             ),
           );
         });
@@ -95,6 +98,9 @@ class _MonumentsPageState extends State<MonumentsPage> {
             behavior: HitTestBehavior.opaque,
             child: NewMonument(
               addMonument: _addNewMonumentToList,
+              locations: _locations,
+              monuments: _monuments,
+              tours: _tours,
             ),
           );
         });
@@ -147,7 +153,7 @@ class _MonumentsPageState extends State<MonumentsPage> {
                   onPressed: _addLocationFunction,
                 ),
                 IconButton(
-                  icon: const Icon(Icons.add_box_outlined),
+                  icon: const Icon(Icons.add),
                   color: Colors.white,
                   onPressed: _addMonumentFunction,
                 ),
@@ -185,68 +191,69 @@ class _MonumentsPageState extends State<MonumentsPage> {
             itemCount: _monuments.length,
             itemBuilder: (context, index) {
               return Container(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MonumentDetailsPage(
-                                      locations: _locations,
-                                      monuments: _monuments,
-                                      tours: _tours,
-                                      monumentId: index,
-                                    )));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange, // Text color
-                        elevation: 5, // Shadow elevation
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Button border radius
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Center(
-                                child: Image.network(
-                                  'https://upload.wikimedia.org/wikipedia/commons/8/80/Matka_Canyon_Skopje_3.jpg',
-                                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MonumentDetailsPage(
+                                  locations: _locations,
+                                  monuments: _monuments,
+                                  tours: _tours,
+                                  monumentId: index,
+                                )));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange, // Text color
+                    elevation: 5, // Shadow elevation
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(10), // Button border radius
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Image.network(
+                                'https://upload.wikimedia.org/wikipedia/commons/8/80/Matka_Canyon_Skopje_3.jpg',
                               ),
                             ),
-                            ListTile(
-                              title: Text(
-                                _monuments[index].name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            if (isSignedIn) ...[
-                              IconButton(
-                                icon: Icon(Icons.delete_rounded),
-                                onPressed: () {
-                                  setState(() {
-                                    _monuments.removeAt(index);
-                                  });
-                                },
+                          ),
+                          ListTile(
+                            title: Text(
+                              _monuments[index].name,
+                              style: TextStyle(
                                 color: Colors.white,
-                              )
-                            ]
-                          ]),
-                    ),),
-                    decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(12.0)),
-                    margin: EdgeInsets.all(10.0),
-                  );
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          if (isSignedIn) ...[
+                            IconButton(
+                              icon: Icon(Icons.delete_rounded),
+                              onPressed: () {
+                                setState(() {
+                                  _monuments.removeAt(index);
+                                });
+                              },
+                              color: Colors.white,
+                            )
+                          ]
+                        ]),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(12.0)),
+                margin: EdgeInsets.all(10.0),
+              );
             }));
   }
 }

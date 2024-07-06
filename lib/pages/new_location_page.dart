@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
+import 'package:skopski_vremeplov/pages/monuments_page.dart';
 import '../modules/location.dart';
 import '../modules/monument.dart';
+import '../modules/tour.dart';
 
 class NewLocation extends StatefulWidget {
   final Function addLocation;
 
-  const NewLocation({super.key, required this.addLocation});
+  final List<Location> locations;
+  final List<Monument> monuments;
+  final List<Tour> tours;
+
+  const NewLocation({super.key, required this.addLocation, required this.locations, required this.monuments, required this.tours});
 
   @override
   State<NewLocation> createState() => _NewLocationState();
@@ -22,12 +28,17 @@ class _NewLocationState extends State<NewLocation> {
   final _longitudeController = TextEditingController();
 
   late List<Monument> _selectedMonuments;
-  List<Monument> allMonuments = [];
+
+  List<Tour> _tours = [];
+  List<Monument> _monuments = [];
+  List<Location> _locations = [];
 
   @override
   void initState() {
     super.initState();
-    allMonuments = Monument.getMonuments();
+    _tours = widget.tours;
+    _monuments = widget.monuments;
+    _locations = widget.locations;
   }
 
   void _submitData() {
@@ -49,8 +60,17 @@ class _NewLocationState extends State<NewLocation> {
     );
 
     widget.addLocation(newLocation);
+    _locations.add(newLocation);
     // NotificationService.sendNotification(newLocation);
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MonumentsPage(
+              locations: _locations,
+              monuments: _monuments,
+              tours: _tours,
+            )));
   }
 
   @override

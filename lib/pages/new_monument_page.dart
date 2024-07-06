@@ -4,11 +4,17 @@ import 'package:skopski_vremeplov/services/notification_service.dart';
 import '../modules/exam.dart';
 import '../modules/location.dart';
 import '../modules/monument.dart';
+import '../modules/tour.dart';
+import 'monuments_page.dart';
 
 class NewMonument extends StatefulWidget {
   final Function addMonument;
 
-  const NewMonument({super.key, required this.addMonument});
+  final List<Location> locations;
+  final List<Monument> monuments;
+  final List<Tour> tours;
+
+  const NewMonument({super.key, required this.addMonument, required this.locations, required this.monuments, required this.tours});
 
   @override
   State<NewMonument> createState() => _NewMonumentState();
@@ -21,16 +27,18 @@ class _NewMonumentState extends State<NewMonument> {
 
   late Location location;
   int _selectedLocationIndex = 0;
-  List<Location> locations = [];
 
+  List<Tour> _tours = [];
+  List<Monument> _monuments = [];
+  List<Location> _locations = [];
 
   @override
   void initState() {
     super.initState();
-    locations = Location.getLocations();
-    location = locations.first;
+    _tours = widget.tours;
+    _monuments = widget.monuments;
+    _locations = widget.locations;
   }
-
 
   void _submitData() {
     if (_nameController.text.isEmpty || _descriptionController.text.isEmpty) {
@@ -53,7 +61,15 @@ class _NewMonumentState extends State<NewMonument> {
 
     widget.addMonument(newMonument);
     // NotificationService.sendNotification(newMonument);
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MonumentsPage(
+              locations: _locations,
+              monuments: _monuments,
+              tours: _tours,
+            )));
   }
 
   @override
@@ -84,10 +100,10 @@ class _NewMonumentState extends State<NewMonument> {
           onChanged: (int? newValue) {
             setState(() {
               _selectedLocationIndex = newValue ?? 0;
-              location = locations[_selectedLocationIndex];
+              location = _locations[_selectedLocationIndex];
             });
           },
-          items: locations.asMap().entries.map<DropdownMenuItem<int>>((entry) {
+          items: _locations.asMap().entries.map<DropdownMenuItem<int>>((entry) {
             return DropdownMenuItem<int>(
               value: entry.key,
               child: Text(entry.value.locationName),
